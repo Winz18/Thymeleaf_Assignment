@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
 <head>
     <title>Thêm/Sửa điện thoại</title>
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-<div layout:fragment="content">
+<header th:include="fragments/header :: header"></header>
+<section layout:fragment="content">
     <form th:action="@{/phones/save}" th:object="${phone}" method="post">
         <input type="hidden" th:field="*{id}">
         <label for="name">Tên sản phẩm:</label>
@@ -15,7 +17,7 @@
         <input type="text" id="brand" th:field="*{brand}" required><br>
 
         <label for="price">Giá:</label>
-        <input type="number" id="price" th:field="*{price}" required><br>
+        <input type="number" id="price" th:field="*{price}" required min="0" step="1"><br>
 
         <label for="description">Mô tả:</label>
         <textarea id="description" th:field="*{description}"></textarea><br>
@@ -25,6 +27,7 @@
 
         <button type="submit">Lưu</button>
     </form>
-</div>
+</section>
+<footer th:include="fragments/footer :: footer"></footer>
 </body>
 </html>
