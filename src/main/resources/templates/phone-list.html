@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<head>
+  <title>Danh sách điện thoại</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<div layout:fragment="content">
+  <form th:action="@{/phones}" method="get">
+    <input type="text" name="keyword" placeholder="Tìm kiếm..." th:value="${keyword}">
+    <button type="submit">Tìm</button>
+  </form>
+
+  <a th:href="@{/phones/add}">Thêm sản phẩm</a>
+
+  <table>
+    <tr>
+      <th>Tên</th>
+      <th>Hãng</th>
+      <th>Giá</th>
+      <th>Mô tả</th>
+      <th>Hình ảnh</th>
+      <th>Hành động</th>
+    </tr>
+    <tr th:each="phone : ${phones.content}">
+      <td th:text="${phone.name}"></td>
+      <td th:text="${phone.brand}"></td>
+      <td th:text="${phone.price}"></td>
+      <td th:text="${phone.description}"></td>
+      <td><img th:src="${phone.imageUrl}" alt="Phone Image" width="50"></td>
+      <td>
+        <a th:href="@{/phones/edit/{id}(id=${phone.id})}">Sửa</a>
+        <a th:href="@{/phones/delete/{id}(id=${phone.id})}">Xóa</a>
+      </td>
+    </tr>
+  </table>
+
+  <div>
+    <a th:href="@{/phones(page=${currentPage - 1})}" th:if="${currentPage > 0}">Trang trước</a>
+    <a th:href="@{/phones(page=${currentPage + 1})}" th:if="${phones.hasNext()}">Trang sau</a>
+  </div>
+</div>
+</body>
+</html>
